@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.Contracts
+namespace Business.Contracts
 {
-    public interface IFlowerRepository
+    public interface IFlowerBusiness
     {
         // GetAll 
         public Task<List<Flower>> GetFlowersAsync();
@@ -19,7 +19,7 @@ namespace Repositories.Contracts
         public Task<List<Flower>> SearchAsync(string search);
 
         //Post
-        public Task PlantFlowerAsync(Flower flower);
+        public Task<Flower> PlantFlowerAsync(Flower flower);
 
 
         //Put

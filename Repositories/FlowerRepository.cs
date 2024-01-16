@@ -14,42 +14,58 @@ namespace Repositories
         }
 
         //Delete
-        public async Task BurnFlower(int id)
+        public async Task<string> BurnFlowerAsync(int id)
         {
-            Flower? flower = await _context.Flowers.FirstOrDefaultAsync(f => f.Id == id);
-            _context.Flowers.Remove(flower);
-            await _context.SaveChangesAsync();
+            string mess = "success";
+
+            var rowsDeleted = await _context.Flowers.Where(f => f.Id == id).ExecuteDeleteAsync();
+
+            if (rowsDeleted == 0)
+            {
+                mess = "ID not found :(";
+                throw new Exception(mess);
+            }
+
+            return mess;
+
         }
 
         //Edit
-        public async Task ChangeFlower(Flower flower)
+        public async Task<Flower> ChangeFlowerAsync(Flower flower)
         {
-            Flower? flowerToModify = await _context.Flowers.FirstOrDefaultAsync(f => f.Id == flower.Id);
-            flowerToModify.Name = flower.Name;
-            flowerToModify.NbPetal = flower.NbPetal;
+            var rowsUpdated = await _context.Flowers.Where(f => f.Id == flower.Id).ExecuteUpdateAsync(
+                u =>
+                u.SetProperty(f => f.NbPetal, flower.NbPetal)
+                .SetProperty(f => f.Name, flower.Name)
+                );
 
-            await _context.SaveChangesAsync();
+            if (rowsUpdated == 0)
+            {
+                throw new Exception("Id non trouvé");
+            }
+            return flower;
         }
 
         //Get
-        public async Task<Flower?> GetFlowerById(int id)
-            => await _context.Flowers.FirstOrDefaultAsync(f => f.Id == id);
+        public async Task<Flower?> GetFlowerByIdAsync(int id)
+            => await _context.Flowers.FirstOrDefaultAsync(f => f.Id == id); //Include pour join
 
         //Get All
-        public async Task<List<Flower>> GetFlowers()
+        public async Task<List<Flower>> GetFlowersAsync()
              => await _context.Flowers.ToListAsync();
 
         //Create
-        public async Task PlantFlower(Flower flower)
+        public async Task PlantFlowerAsync(Flower flower)
         {
             await _context.Flowers.AddAsync(flower);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Flower>> Search(string search)
+        public async Task<List<Flower>> SearchAsync(string search)
             => await _context.Flowers.Where(f =>
             EF.Functions.Like(f.Id.ToString(), $"%{search}%") ||
-            EF.Functions.Like(f.Name, $"%{search}%")
+            EF.Functions.Like(f.Name, $"%{search}%") ||
+            EF.Functions.Like(f.NbPetal.ToString(), $"%{search}%")
             ).ToListAsync();
     }
 }
