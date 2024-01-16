@@ -16,6 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<GardenContext>(ob
     => ob.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=FlowerAPI;Integrated Security=SSPI; TrustServerCertificate=True;"));
 
+//builder.Services.AddDbContext<WikyContext>(ob
+//    => ob.UseSqlServer(connectionString: @"Data Source=(localdb)\MSSQLLOCALDB;Initial Catalog=FlowerAPI;Integrated Security=True"));
+
 builder.Services.AddTransient<IFlowerRepository, FlowerRepository>();
 builder.Services.AddTransient<IFlowerBusiness, FlowerBusiness>();
 
