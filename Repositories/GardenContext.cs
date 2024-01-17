@@ -13,6 +13,8 @@ namespace Repositories
         public GardenContext(DbContextOptions<GardenContext> dbContextOptions) : base(dbContextOptions) { }
 
         public DbSet<Flower> Flowers { get; set; }
+        public DbSet<Field> Fields { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,6 +24,16 @@ namespace Repositories
 
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Field>()
+                .HasMany(f => f.Flowers)
+                .WithOne(fl => fl.Field)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

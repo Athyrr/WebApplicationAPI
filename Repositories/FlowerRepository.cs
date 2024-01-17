@@ -48,7 +48,7 @@ namespace Repositories
 
         //Get
         public async Task<Flower?> GetFlowerByIdAsync(int id)
-            => await _context.Flowers.FirstOrDefaultAsync(f => f.Id == id); //Include pour join
+            => await _context.Flowers.Include(f=>f.Field).FirstOrDefaultAsync(f => f.Id == id); //Include pour join quand je rajouterai une entité liée
 
         //Get All
         public async Task<List<Flower>> GetFlowersAsync()

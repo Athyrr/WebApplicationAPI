@@ -7,25 +7,43 @@ using Repositories;
 using Repositories.Contracts;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using WebApplicationAPI.DTO;
+using WebApplicationAPI.DTO.FieldDTO;
+using WebApplicationAPI.DTO.FlowerDTO;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<GardenContext>(ob
-    => ob.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=FlowerAPI;Integrated Security=SSPI; TrustServerCertificate=True;"));
+//builder.Services.AddDbContext<GardenContext>(ob
+//    => ob.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=FlowerAPI;Integrated Security=SSPI; TrustServerCertificate=True;"));
 
-//builder.Services.AddDbContext<WikyContext>(ob
-//    => ob.UseSqlServer(connectionString: @"Data Source=(localdb)\MSSQLLOCALDB;Initial Catalog=FlowerAPI;Integrated Security=True"));
+builder.Services.AddDbContext<GardenContext>(ob
+    => ob.UseSqlServer(connectionString: @"Data Source=(localdb)\MSSQLLOCALDB;Initial Catalog=FlowerAPI;Integrated Security=True"));
 
 builder.Services.AddTransient<IFlowerRepository, FlowerRepository>();
 builder.Services.AddTransient<IFlowerBusiness, FlowerBusiness>();
+builder.Services.AddTransient<IFieldRepository, FieldRepository>();
+builder.Services.AddTransient<IFieldBusiness, FieldBusiness>();
 
 builder.Services.AddAutoMapper(config =>
  {
      config.CreateMap<Flower, FlowerDTO>();
      config.CreateMap<FlowerDTO, Flower>();
+
+     config.CreateMap<Flower, FlowerToChangeDTO>();
+     config.CreateMap<FlowerToChangeDTO, Flower>();
+
+     config.CreateMap<Flower, FlowerByIdDTO>();
+     config.CreateMap<FlowerByIdDTO, Flower>();
+
+     config.CreateMap<Field, FieldDTO>();
+     config.CreateMap<FieldDTO, Field>();
+
+     config.CreateMap<Field, FieldByIdDTO>();
+     config.CreateMap<FieldByIdDTO, Field>();
+
+     config.CreateMap<Field, FieldToAddDTO>();
+     config.CreateMap<FieldToAddDTO, Field>();
  });
 
 
