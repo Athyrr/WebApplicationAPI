@@ -95,7 +95,7 @@ namespace WebApplicationAPI.Controllers
             //Utilisation va devoir deviner l'id à moins de retourner l'object avec l'id
             //Ou ajouter un numero unique en prop
 
-                var field = _mapper.Map<Field>(fieldDTO);
+            var field = _mapper.Map<Field>(fieldDTO);
             try
             {
                 var fieldToChange = await _fieldBusiness.GetFieldByIdAsync(field.Id);
@@ -103,7 +103,7 @@ namespace WebApplicationAPI.Controllers
                 fieldToChange.Name = field.Name;
                 fieldToChange.Area = field.Area;
 
-               var fieldEdited =  await _fieldBusiness.ChangeFieldAsync(fieldToChange);
+                var fieldEdited = await _fieldBusiness.ChangeFieldAsync(fieldToChange);
 
                 var fieldEditedDTO = _mapper.Map<FieldDTO>(fieldEdited);
                 return Ok(fieldDTO); //With ID

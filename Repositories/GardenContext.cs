@@ -10,18 +10,20 @@ namespace Repositories
 {
     public class GardenContext : DbContext
     {
-        public GardenContext(DbContextOptions<GardenContext> dbContextOptions) : base(dbContextOptions) { }
-
         public DbSet<Flower> Flowers { get; set; }
         public DbSet<Field> Fields { get; set; }
 
+
+        public GardenContext()
+        {
+        }
+        public GardenContext(DbContextOptions<GardenContext> dbContextOptions) : base(dbContextOptions) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionString in Program
 
             //optionsBuilder.LogTo(Console.WriteLine);
-
 
             base.OnConfiguring(optionsBuilder);
         }

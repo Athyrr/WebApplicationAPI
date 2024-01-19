@@ -96,10 +96,9 @@ namespace WebApplicationAPI.Controllers
             //Comment savoir quel fleur supprimer si l'id est caché avec FlowerDTO
             //Utilisation va devoir deviner l'id à moins de retourner l'object avec l'id
             //Ou ajouter un numero unique en prop
+                var flower = _mapper.Map<Flower>(flowerDTO);
             try
             {
-                var flower = _mapper.Map<Flower>(flowerDTO);
-
                 var flowerToChange = await _flowerBusiness.GetFlowerByIdAsync(flower.Id);
 
                 flowerToChange.Name = flower.Name;

@@ -33,22 +33,31 @@ namespace Repositories
         //Edit
         public async Task<Flower> ChangeFlowerAsync(Flower flower)
         {
-            var rowsUpdated = await _context.Flowers.Where(f => f.Id == flower.Id).ExecuteUpdateAsync(
-                u =>
-                u.SetProperty(f => f.NbPetal, flower.NbPetal)
-                .SetProperty(f => f.Name, flower.Name)
-                );
+            //var rowsUpdated = await _context.Flowers
+            //    .Where(f => f.Id == flower.Id)
+            //    .ExecuteUpdateAsync(u => u
+            //    .SetProperty(f => f.NbPetal, flower.NbPetal)
+            //    .SetProperty(f => f.Name, flower.Name));
 
-            if (rowsUpdated == 0)
+            //if (rowsUpdated == 0)
+            //{
+            //    throw new Exception("Id non trouvé");
+            //}
+            //return flower;
+
+            var flowerToUpdate = await _context.Flowers.FirstOrDefaultAsync(f => f.Id == flower.Id);
+            if (flowerToUpdate == null)
             {
                 throw new Exception("Id non trouvé");
             }
-            return flower;
+            flowerToUpdate.NbPetal = flower.NbPetal;
+            flowerToUpdate.Name = flower.Name;
+            await _context.SaveChangesAsync();
+            return flowerToUpdate;
         }
-
         //Get
         public async Task<Flower?> GetFlowerByIdAsync(int id)
-            => await _context.Flowers.Include(f=>f.Field).FirstOrDefaultAsync(f => f.Id == id); //Include pour join quand je rajouterai une entité liée
+            => await _context.Flowers.Include(f => f.Field).FirstOrDefaultAsync(f => f.Id == id); //Include pour join quand je rajouterai une entité liée
 
         //Get All
         public async Task<List<Flower>> GetFlowersAsync()
