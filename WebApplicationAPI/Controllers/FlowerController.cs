@@ -24,8 +24,11 @@ namespace WebApplicationAPI.Controllers
             _flowerBusiness = flowerBusiness;
             _mapper = mapper;
         }
-
-
+ 
+        /// <summary>
+        /// Get all flowers
+        /// </summary>
+        /// <returns></returns>
         // GetAll 
         [HttpGet]
         public async Task<ActionResult<List<FlowerDTO>>> GetFlowers()
@@ -36,8 +39,14 @@ namespace WebApplicationAPI.Controllers
 
             return Ok(flowersDTO);
         }
+        
 
 
+        /// <summary>
+        /// Get 1 flower
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         //GetById
         [HttpGet("GetFlowerById")]
         public async Task<ActionResult<FlowerDTO>> GetFlowerById(int id)
@@ -54,6 +63,11 @@ namespace WebApplicationAPI.Controllers
         }
 
 
+        /// <summary>
+        /// Search with props
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         //Search
         [HttpGet("Search")]
         public async Task<ActionResult<List<FlowerDTO>>> Search(string search)
@@ -68,8 +82,13 @@ namespace WebApplicationAPI.Controllers
             var flowersDTO = _mapper.Map<List<FlowerDTO>>(flowersSearched);
             return Ok(flowersDTO);
         }
+        
 
-
+        /// <summary>
+        /// create using dto
+        /// </summary>
+        /// <param name="flowerByIdDTO"></param>
+        /// <returns></returns>
         //Post
         [HttpPost]
         public async Task<ActionResult<FlowerDTO>> PlantFlower(FlowerByIdDTO flowerByIdDTO)
@@ -88,7 +107,11 @@ namespace WebApplicationAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Edit using dto
+        /// </summary>
+        /// <param name="flowerDTO"></param>
+        /// <returns></returns>
         //Put
         [HttpPut]
         public async Task<ActionResult<FlowerToChangeDTO>> ChangeFlower(FlowerDTO flowerDTO)
@@ -115,6 +138,11 @@ namespace WebApplicationAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete with id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         //Delete
         [HttpDelete]
         public async Task<ActionResult<string>> BurnFlower(int id)

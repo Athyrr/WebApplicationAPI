@@ -22,7 +22,10 @@ namespace WebApplicationAPI.Controllers
         }
 
 
-
+        /// <summary>
+        /// Get all field
+        /// </summary>
+        /// <returns></returns>
         // GetAll 
         [HttpGet]
         public async Task<ActionResult<List<Field>>> GetFields()
@@ -35,6 +38,11 @@ namespace WebApplicationAPI.Controllers
         }
 
 
+        /// <summary>
+        /// Get 1 field by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         //GetById
         [HttpGet("GetFieldById")]
         public async Task<ActionResult<Field>> GetFieldById(int id)
@@ -51,6 +59,11 @@ namespace WebApplicationAPI.Controllers
         }
 
 
+        /// <summary>
+        /// Search with props
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         //Search
         [HttpGet("Search")]
         public async Task<ActionResult<List<FieldDTO>>> Search(string search)
@@ -66,7 +79,11 @@ namespace WebApplicationAPI.Controllers
             return Ok(fieldsDTO);
         }
 
-
+        /// <summary>
+        /// create using dto
+        /// </summary>
+        /// <param name="fieldToAddDTO"></param>
+        /// <returns></returns>
         //Post
         [HttpPost]
         public async Task<ActionResult<FieldDTO>> CreateField(FieldToAddDTO fieldToAddDTO)
@@ -86,7 +103,11 @@ namespace WebApplicationAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Edit using dto
+        /// </summary>
+        /// <param name="fieldDTO"></param>
+        /// <returns></returns>
         //Put
         [HttpPut]
         public async Task<ActionResult<FieldDTO>> ChangeField(FieldDTO fieldDTO)
@@ -114,7 +135,11 @@ namespace WebApplicationAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Delete with id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         //Delete
         [HttpDelete]
         public async Task<ActionResult<string>> BurnField(int id)
